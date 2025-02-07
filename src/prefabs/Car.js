@@ -8,11 +8,15 @@ class Car extends Phaser.GameObjects.Sprite {
         this.parentScene.add.existing(this).setScale(2)
         this.parentScene.physics.add.existing(this).setScale(2)
         //this.setVelocityY(velocity)
-        this.body.velocity.y = velocity
+        this.body.velocity.y = velocity * df
+        this.body.setDragX(1500)
         //this.setImmovable()
         this.newCar = true
     }
     update() {
+        if (gameOver) {
+            this.body.velocity.y = -2000
+        }
         if(this.newCar && this.y > height/2) {
             this.parentScene.addCar(this.parent, this.velocity)
             this.newCar = false

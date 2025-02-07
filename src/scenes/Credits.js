@@ -4,15 +4,6 @@ class Credits extends Phaser.Scene {
     }
 
     create() {
-        let textConfig = {
-            fontFamily: 'Courier',
-            fontSize: '28px',
-            color: '#FFFFFF',
-            padding: {
-                top: 5,
-                bottom: 5,
-            },
-        }
         this.add.text(20, 20, 'credits', textConfig)
         this.add.text(20, 50, 'left to escape', textConfig)
 

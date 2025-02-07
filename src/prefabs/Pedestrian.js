@@ -1,0 +1,34 @@
+class Pedestrian extends Phaser.GameObjects.Sprite {
+    constructor(scene, velocity) {
+        super(scene, width * (Math.random() * (0.7 - 0.3) + 0.3), -40, 'pedestrian')
+
+        this.parentScene = scene
+
+        this.parentScene.add.existing(this).setScale(2)
+        this.parentScene.physics.add.existing(this).setScale(2)
+        this.body.velocity.y = velocity * df
+
+        this.dir = 0
+    }
+    update() {
+        if (gameOver) {
+            this.body.velocity.y = 0
+        }
+        //this.y += 11
+        if (this.dir < 0.5) {
+            this.x += 1.5
+        } else {
+            this.x -= 1.5
+        }
+
+        //if(this.y > height + this.height) {
+        if(this.y > 2000) {
+            this.y = -18
+
+            this.dir = Math.random()
+
+           this.x = width * (Math.random() * (0.7 - 0.3) + 0.3)
+
+        }
+    }
+}
