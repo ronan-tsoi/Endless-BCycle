@@ -8,7 +8,7 @@ let config = {
     physics: {
         default: 'arcade',
         arcade: {
-            debug: true
+            debug: false
         }
     },
     scene: [ Menu , Play, Credits , GameOver ]
@@ -22,13 +22,19 @@ let bcycle = null
 let pedestrian = null
 let { height, width } = game.config
 let gameOver
+// score + score multipliers
 let df
+let gdm = 1
 let score
+
+let precision = 3.9
 
 let textConfig = {
     fontFamily: 'Courier',
     fontSize: '28px',
+    //backgroundColor: '#000000',
     color: '#FFFFFF',
+    align: 'center',
     padding: {
         top: 5,
         bottom: 5,

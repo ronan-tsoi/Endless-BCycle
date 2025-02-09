@@ -12,8 +12,11 @@ class Car extends Phaser.GameObjects.Sprite {
         this.body.setDragX(1500)
         //this.setImmovable()
         this.newCar = true
+
+        this.GD = new CarGD(scene, this)
     }
     update() {
+        this.GD.update()
         if (gameOver) {
             this.body.velocity.y = -2000
         }
@@ -23,6 +26,7 @@ class Car extends Phaser.GameObjects.Sprite {
         }
         if(this.y > height + this.height) {
             this.destroy()
+            this.GD.destroy()
         }
     }
 }

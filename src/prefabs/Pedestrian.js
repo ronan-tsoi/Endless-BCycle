@@ -8,24 +8,33 @@ class Pedestrian extends Phaser.GameObjects.Sprite {
         this.parentScene.physics.add.existing(this).setScale(2)
         this.body.velocity.y = velocity * df
 
-        this.dir = 0
+        this.dir = 1
+
+        this.GD = new PedestrianGD(scene, this)
     }
     update() {
+        this.GD.update()
         if (gameOver) {
             this.body.velocity.y = 0
         }
         //this.y += 11
         if (this.dir < 0.5) {
-            this.x += 1.5
+            this.x += 1.7
         } else {
-            this.x -= 1.5
+            this.x -= 1.7
         }
 
         //if(this.y > height + this.height) {
         if(this.y > 2000) {
             this.y = -18
+            this.GD.alpha = 0
 
             this.dir = Math.random()
+            if (this.dir < 0.5) {
+                this.setFlipX(true)
+            } else {
+                this.setFlipX(false)
+            }
 
            this.x = width * (Math.random() * (0.7 - 0.3) + 0.3)
 
