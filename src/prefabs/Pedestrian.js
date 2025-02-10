@@ -1,6 +1,6 @@
 class Pedestrian extends Phaser.GameObjects.Sprite {
     constructor(scene, velocity) {
-        super(scene, width * (Math.random() * (0.7 - 0.3) + 0.3), -40, 'pedestrian')
+        super(scene, width * (Math.random() * (0.7 - 0.3) + 0.3), -4000, 'pedestrian')
 
         this.parentScene = scene
 

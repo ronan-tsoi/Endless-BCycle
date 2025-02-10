@@ -1,16 +1,20 @@
 class Setpiece extends Phaser.GameObjects.Sprite {
     constructor(scene, velocity) {
-        super(scene, 60 + ( Phaser.Math.Between(0, 1) * (width-120) ), -100, 'sp-trees1')
+        super(scene, 90 + ( Phaser.Math.Between(0, 1) * (width-180) ), -100, sp[Phaser.Math.Between(0,sp.length)])
 
         this.parentScene = scene
 
-        this.parentScene.add.existing(this).setScale(2)
-        this.parentScene.physics.add.existing(this).setScale(2)
+        this.parentScene.add.existing(this).setScale(3)
+        this.parentScene.physics.add.existing(this).setScale(3)
 
         //this.setVelocityY(velocity)
         this.body.velocity.y = velocity * df
         //this.setImmovable()
         this.newSP = true
+
+        if (this.x == 90) {
+            this.setFlipX(true)
+        }
     }
     update() {
         if (gameOver) {

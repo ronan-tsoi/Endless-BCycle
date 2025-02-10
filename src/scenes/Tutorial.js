@@ -1,6 +1,6 @@
-class Play extends Phaser.Scene {
+class Tutorial extends Phaser.Scene {
     constructor() {
-        super('playScene')
+        super('tutorialScene')
     }
 
     init() {
@@ -9,7 +9,7 @@ class Play extends Phaser.Scene {
     }
 
     create() {
-        df = 1
+        df = 0.8
         score = 0
 
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
@@ -38,38 +38,57 @@ class Play extends Phaser.Scene {
         this.carGroup = this.add.group({
             runChildUpdate: true
         })
-        this.time.delayedCall(1500, () => {
+        this.time.delayedCall(5500, () => {
             this.addCar()
         })
         this.physics.add.collider(this.carGroup, this.bounds)
 
         //pedestrian
         pedestrian = new Pedestrian(this, 950)
+        pedestrian.y = -5200
         pedestrian.play('pedestrian-walking')
-
-        //setpiece group
-        this.spGroup = this.add.group({
-            runChildUpdate: true
-        })
-        this.time.delayedCall(1000, () => {
-            this.addSP()
-        })
 
         //this.add.text(20, 20, 'awesome gameplay here', textConfig)
         //this.add.text(20, 50, 'space for game over (debug)', textConfig)
 
         //this.displayScore = this.add.text(width/2, 50, '', textConfig).setOrigin(0.5)
-        this.displayScore = this.add.bitmapText(width/2, 50, 'gem', ' ', 48, 1).setOrigin(0.5)
-        this.displayScore.setDepth(10)
         //this.displayMultiplier = this.add.text(width/2, 80, '', textConfig).setOrigin(0.5)
         this.displayMultiplier = this.add.bitmapText(width/2, 90, 'gem', ' ', 32, 1).setOrigin(0.5)
         this.displayMultiplier.displayOriginY = 0
         this.displayMultiplier.setDepth(10)
-        //this.displayMultiplier.style.fontSize = '16px'
+        
+        //this.displayScore = this.add.text(width/2, height-50, 'Press SPACE to skip', textConfig).setOrigin(0.5)
+        this.displayScore = this.add.bitmapText(width/2, height-50, 'gem', 'Press SPACE to skip', 28, 1).setOrigin(0.5)
+        this.displayScore.setDepth(10)
 
-        //this.roadVelocity = 6
+        //instructions
+        //tutorial = this.add.text(width/2, height/4, '', textConfig).setOrigin(0.5)
+        tutorial = this.add.bitmapText(width/2, height/4, 'gem', ' ', 32, 1).setOrigin(0.5)
+        tutorial.displayOriginY = 0
+        tutorial.setDepth(10)
+
+        this.time.delayedCall(500, () => {
+            //tutorial.text = '← →\nSwerve left / right'
+            tutorial.text = '<- ->\nSwerve left / right'
+        })
+        this.time.delayedCall(3500, () => {
+            tutorial.text = "Don't crash into cars\nor pedestrians"
+        })
+        this.time.delayedCall(6500, () => {
+            tutorial.text += '\n\nBut, try coming\nvery close to them'
+        })
+        this.time.delayedCall(12500, () => {
+            tutorial.text = 'Traffic will speed up\nthe longer you play'
+        })
+        this.time.delayedCall(15500, () => {
+            tutorial.text += '\n\nGood luck!'
+        })
+        this.time.delayedCall(19000, () => {
+            this.scene.start('playScene')
+        })
 
         gameOver = false
+
     }
 
     addCar() {
@@ -78,23 +97,18 @@ class Play extends Phaser.Scene {
         this.carGroup.add(car)
     }
 
-    addSP() {
-        let setpiece = new Setpiece(this, 1000)
-        this.spGroup.add(setpiece)
-    }
-
     update() {
-        /*if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
-            // game over (debug)
-            this.scene.start('gameOverScene')
-        }*/
+        if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
+            // skip tutorial
+            this.scene.start('playScene')
+        }
         //console.log(this.road.tilePositionY)
         pedestrian.update()
 
         if (!gameOver) {
-            df *= 1.0002
-            score += 1 * df * gdm
-            this.displayScore.text = Phaser.Math.RoundTo(score)
+            //df *= 1.0004
+            //score += 1 * df * gdm
+            //this.displayScore.text = Phaser.Math.RoundTo(score)
 
             //console.log(df)
             this.road.tilePositionY -= 6 * df
@@ -113,14 +127,14 @@ class Play extends Phaser.Scene {
            this.physics.world.collide(this.carGroup, this.carGroup)
 
            if (gdm == 1) {
+            this.displayMultiplier.text = ''
             //this.displayMultiplier.style.color = '#FFFFFF'
-            this.displayMultiplier.setTint(0xFFFFFF)
-            this.displayMultiplier.text = 'MULTIPLIER ' + Phaser.Math.RoundTo(df, -2) + 'x'
+            this.displayMultiplier.setTint(0XFFFFFF)
            }
            else {
             //this.displayMultiplier.style.color = '#00FF00'
             this.displayMultiplier.setTint(0x00FF00)
-            this.displayMultiplier.text = 'MULTIPLIER ' + Phaser.Math.RoundTo((df * gdm), -2) + 'x \nROAD HAZARD BONUS!'
+            this.displayMultiplier.text = 'MULTIPLIER ' + Phaser.Math.RoundTo((gdm), -2) + 'x \nROAD HAZARD BONUS!'
            }
 
            gdm = 1
@@ -135,7 +149,7 @@ class Play extends Phaser.Scene {
     }
 
     bcycleCollision() {
-        this.cameras.main.shake(200, .06 * (df))
+        this.cameras.main.shake(200, .06 * (df * 1.25))
         gameOver = true
         df = 0
         bcycle.destroy()

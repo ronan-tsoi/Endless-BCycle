@@ -9,7 +9,7 @@ class PedestrianGD extends Phaser.GameObjects.Sprite {
         this.parentScene.physics.add.existing(this).setScale(precision*1.5)
 
         this.alpha = 0
-        this.setTint(0xFF0000)
+        this.setTint(0x00FF00)
 
     }
     update() {

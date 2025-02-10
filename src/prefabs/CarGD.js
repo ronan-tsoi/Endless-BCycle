@@ -9,7 +9,7 @@ class CarGD extends Phaser.GameObjects.Sprite {
         this.parentScene.add.existing(this).setScale(precision)
         this.parentScene.physics.add.existing(this).setScale(precision)
         this.alpha = 0
-        this.setTint(0xFF0000)
+        this.setTint(0x00FF00)
     }
     update() {
         this.x = this.parentCar.x
