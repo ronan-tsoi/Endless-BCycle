@@ -17,17 +17,18 @@ class Pedestrian extends Phaser.GameObjects.Sprite {
         if (gameOver) {
             this.body.velocity.y = 0
         }
-        //this.y += 11
+
         if (this.dir < 0.5) {
             this.x += 1.7
         } else {
             this.x -= 1.7
         }
 
-        //if(this.y > height + this.height) {
         if(this.y > 2000) {
             this.y = -18
             this.GD.alpha = 0
+            this.GD.sfxPlayed = false
+            this.setTint(0xFFFFFF)
 
             this.dir = Math.random()
             if (this.dir < 0.5) {

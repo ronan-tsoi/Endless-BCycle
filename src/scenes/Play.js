@@ -12,8 +12,7 @@ class Play extends Phaser.Scene {
         df = 1
         score = 0
 
-        keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
-
+        //keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
         cursors = this.input.keyboard.createCursorKeys();
 
         //road bounds
@@ -26,8 +25,7 @@ class Play extends Phaser.Scene {
         //tile sprite
         this.road = this.add.tileSprite(width/2, height/2, 240, 480, 'road').setScale(2)
 
-        //create BCyclist
-        //let bcycle
+        //BCyclist
         bcycle = this.physics.add.sprite(width/2, height - (height/4), 'bcycle', 0).setScale(2)
         bcycle.body.setSize(14)
         bcycle.setDragX(2900)
@@ -55,19 +53,20 @@ class Play extends Phaser.Scene {
             this.addSP()
         })
 
-        //this.add.text(20, 20, 'awesome gameplay here', textConfig)
-        //this.add.text(20, 50, 'space for game over (debug)', textConfig)
+        this.bgm = this.sound.add('8bit-Bossa', { 
+            mute: false,
+            volume: 0.75,
+            rate: 1,
+            loop: true 
+        })
+        this.bgm.play()
 
-        //this.displayScore = this.add.text(width/2, 50, '', textConfig).setOrigin(0.5)
         this.displayScore = this.add.bitmapText(width/2, 50, 'gem', ' ', 48, 1).setOrigin(0.5)
         this.displayScore.setDepth(10)
-        //this.displayMultiplier = this.add.text(width/2, 80, '', textConfig).setOrigin(0.5)
+
         this.displayMultiplier = this.add.bitmapText(width/2, 90, 'gem', ' ', 32, 1).setOrigin(0.5)
         this.displayMultiplier.displayOriginY = 0
         this.displayMultiplier.setDepth(10)
-        //this.displayMultiplier.style.fontSize = '16px'
-
-        //this.roadVelocity = 6
 
         gameOver = false
     }
@@ -113,19 +112,16 @@ class Play extends Phaser.Scene {
            this.physics.world.collide(this.carGroup, this.carGroup)
 
            if (gdm == 1) {
-            //this.displayMultiplier.style.color = '#FFFFFF'
             this.displayMultiplier.setTint(0xFFFFFF)
             this.displayMultiplier.text = 'MULTIPLIER ' + Phaser.Math.RoundTo(df, -2) + 'x'
            }
            else {
-            //this.displayMultiplier.style.color = '#00FF00'
             this.displayMultiplier.setTint(0x00FF00)
             this.displayMultiplier.text = 'MULTIPLIER ' + Phaser.Math.RoundTo((df * gdm), -2) + 'x \nROAD HAZARD BONUS!'
            }
 
            gdm = 1
            
-           //this.bcycle.setVelocity(this.BCYCLE_VELOCITY * bcycleVector.x, 0)
         } else {
             this.displayMultiplier.text = ''
             this.time.delayedCall(2000, () => {
@@ -135,6 +131,9 @@ class Play extends Phaser.Scene {
     }
 
     bcycleCollision() {
+        this.crash = this.sound.add('crash', {volume: 1.75})
+        this.crash.play()
+        this.bgm.volume = 0
         this.cameras.main.shake(200, .06 * (df))
         gameOver = true
         df = 0

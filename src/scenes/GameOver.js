@@ -4,8 +4,6 @@ class GameOver extends Phaser.Scene {
     }
 
     create() {
-
-        //this.displayMultiplier = this.add.bitmapText(width/2, 90, 'gem', ' ', 32, 1).setOrigin(0.5)
         this.add.bitmapText(width/2, height/3, 'gem', Phaser.Math.RoundTo(score), 128, 1).setOrigin(0.5)
         this.add.bitmapText(width/2, height/2, 'gem', 'GAME OVER', 42, 1).setOrigin(0.5)
 
@@ -15,13 +13,14 @@ class GameOver extends Phaser.Scene {
         this.trees2 = this.add.sprite(90, height/3 , 'trees1', 0).setScale(3)
         this.trees2.setFlipX(true)
 
-        //this.add.text(20, 50, 'left to retry, right to menu', textConfig)
+        this.pedestrian = this.add.sprite(width/2-5, height/6 , 'pdisplay', 0).setScale(3)
 
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT)
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT)
     }
     update() {
         if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+            this.sound.play('playStart')
             // play
             if (score == 0) {
                 this.scene.start('tutorialScene')
@@ -31,6 +30,7 @@ class GameOver extends Phaser.Scene {
         }
         if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
             // menu
+            this.sound.play('select')
             this.scene.start('menuScene')
         }
     }

@@ -11,6 +11,8 @@ class PedestrianGD extends Phaser.GameObjects.Sprite {
         this.alpha = 0
         this.setTint(0x00FF00)
 
+        this.sfxPlayed = false
+
     }
     update() {
         this.x = this.parentPedestrian.x
@@ -24,8 +26,16 @@ class PedestrianGD extends Phaser.GameObjects.Sprite {
     }
 
     bcycleGraze() {
-        this.alpha = 0.25
-        console.log('grazing pedestrian')
+        this.graze = this.parentScene.sound.add('grazePedestrian', {volume: 0.25})
+        
+        if (!this.sfxPlayed) {
+            this.graze.play()
+            this.sfxPlayed = true
+        }
+
+        //this.alpha = 0.25
+        this.parentPedestrian.setTint(0x00FF00)
+        //console.log('grazing pedestrian')
         gdm = 15
     }
 }

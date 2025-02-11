@@ -1,16 +1,15 @@
 class Car extends Phaser.GameObjects.Sprite {
     constructor(scene, velocity) {
         super(scene, width * ( Phaser.Math.Between(2, 4) / 5) - 70, -100, 'car')
-        //super(scene, width/2, -100, 'car')
 
         this.parentScene = scene
 
         this.parentScene.add.existing(this).setScale(2)
         this.parentScene.physics.add.existing(this).setScale(2)
-        //this.setVelocityY(velocity)
+
         this.body.velocity.y = velocity * df
         this.body.setDragX(1500)
-        //this.setImmovable()
+    
         this.newCar = true
 
         this.GD = new CarGD(scene, this)

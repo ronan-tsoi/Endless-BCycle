@@ -7,9 +7,8 @@ class Setpiece extends Phaser.GameObjects.Sprite {
         this.parentScene.add.existing(this).setScale(3)
         this.parentScene.physics.add.existing(this).setScale(3)
 
-        //this.setVelocityY(velocity)
         this.body.velocity.y = velocity * df
-        //this.setImmovable()
+
         this.newSP = true
 
         if (this.x == 90) {
